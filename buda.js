@@ -15,9 +15,10 @@ _.mixin({
   }
 });
 
-var Buda = function(api_key, api_secret) {
+var Buda = function(api_key, api_secret, api_domain='https://www.buda.com') {
   this.api_key = api_key;
   this.api_secret = api_secret;
+  this.api_domain = api_domain;
 
   _.bindAll.apply(_, [this].concat(_.functions(this)));
 }
@@ -26,7 +27,7 @@ Buda.prototype._request = function(method, path, args, data, auth=false) {
   var fullPath = path + (querystring.stringify(args) === '' ? '' : '?') + querystring.stringify(args);
 
   var options = {
-    uri: 'https://www.buda.com' + fullPath,
+    uri: this.api_domain + fullPath,
     method: method,
     headers: {
       'User-Agent': 'Mozilla/4.0 (compatible; buda-promise Node.js client)',
